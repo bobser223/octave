@@ -1,55 +1,42 @@
 clc;
-clear;
+warning off;
+
+M = [1, -1; 1, -1];
+[i, j] = rref(M);
+obraz_base = M(:, j);
+
+core_base = null(M);
+
+quiver(0, 0, obraz_base(1,1), obraz_base(2,1), 0, 'b');
+pause(2);
+quiver(0, 0, core_base(1,1), core_base(2,1), 0, 'r');
+pause(2);
+
+M = [1 1 1 ;2, -2 3; 3 -1, 4];
+[i, j] = rref(M);
+obraz_base = M(:, j)
+core_base = null(M)
+
+
+
+[u, v] = meshgrid(-10:1:10, -10:1:10);
+
+XT = u * obraz_base(1,1) + v * obraz_base(1,2);
+YT = u * obraz_base(2, 1) + v * obraz_base(2,2);
+ZT = u * obraz_base(3,1) + v * obraz_base(3,2);
+
+
+surf(XT, YT, ZT, 'FaceAlpha', 0.5);
+title('obraz');
+xlabel('X-axis'); ylabel('Y-axis'); zlabel('Z-axis');
+grid on;
+axis equal;
+
+pause(2);
+
 figure;
-
-% Візуалізація ядра відображення (a)
-subplot(1, 2, 1);
-hold on;
-grid on;
-axis equal;
-xlim([-2, 2]);
-ylim([-2, 2]);
-xlabel('x1');
-ylabel('x2');
-title('Ядро відображення (a)');
-plot([-2, 2], [-2, 2], 'b');  % Лінія ядра
-
-% Візуалізація образу відображення (a)
-subplot(1, 2, 2);
-hold on;
-grid on;
-axis equal;
-xlim([-2, 2]);
-ylim([-2, 2]);
-xlabel('x1');
-ylabel('x2');
-title('Образ відображення (a)');
-plot([-2, 2], [2, -2], 'r');  % Лінія образу
-
-% Збереження графіків
-saveas(gcf, 'plot_a.png');
-
-clc;
-clear;
-figure;
-
-% Візуалізація ядра відображення (b)
-x = linspace(-1, 1, 10);
-y = -0.2 * x;
-z = -0.8 * x;
-plot3(x, y, z, 'b');
-hold on;
-grid on;
-xlabel('x1');
-ylabel('x2');
-zlabel('x3');
-title('Ядро відображення (b)');
-axis equal;
-
-% Візуалізація образу відображення (b) може вимагати більш складного аналізу
-% для точного визначення, тому тут показано лише ядро.
-% Для образу можна використовувати, наприклад, параметричні поверхні, якщо необхідно.
-
-% Збереження графіків
-saveas(gcf, 'plot_b.png');
-
+quiver3(0,0,0, core_base(1,1), core_base(2,1), core_base(3,1), 'AutoScale', 'on', 'Color', 'b');
+xlabel('X');
+ylabel('Y');
+zlabel('Z');
+title('base');
